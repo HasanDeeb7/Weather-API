@@ -1,7 +1,7 @@
 import styles from './Button.module.css'
-const Button=({className})=>{
+const Button=({className,eventHandler})=>{
     return(
-        <button className={className} >Find Weather</button>
+        <button className={className} onClick={eventHandler}>Find Weather</button>
     )
 }
 

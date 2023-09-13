@@ -12,20 +12,25 @@ const App=()=>{
     setInputValue(e.target.value)
   }
  
-// useEffect(()=>{
-//     fetch(fakeWeatherData)
-//     .then((response)=>response.json())
-//     .then((country)=>console.log(country))
-// })
+let [fetchingdata,setFetchingData]=useState({})
+let fetching=()=>
+{
+  //   useEffect(()=>{
+  //     fetch(fakeWeatherData)
+  //     .then((response)=>response.json())
+  //     .then((country)=>setFetchingData(country))
+  // },[])
+  console.log("data fetching")
+}
+
 console.log(fakeWeatherData.list[0].main.humidity)
 console.log(fakeWeatherData.list[0].main.pressure)
 console.log(fakeWeatherData.list[0].main.temp)
 console.log(fakeWeatherData.list[0].weather[0].description)//caption on weather
   return(
     <div className="App">
-        <Search onInputChange={onInputChange} />
-        <TodayWeather humidity={fakeWeatherData.list[0].main.humidity} temp={fakeWeatherData.list[0].main.temp}
-        pressure={fakeWeatherData.list[0].main.pressure} desc={fakeWeatherData.list[0].weather[0].description}/>
+        <Search onInputChange={onInputChange} eventHandler={fetching}/>
+        <TodayWeather data={fakeWeatherData}/>
     </div>
 
   )
