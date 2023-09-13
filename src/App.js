@@ -10,34 +10,58 @@ import style from "./styles/weather-item.module.css"
 
 
 const App=()=>{
-  const [inputValue, setInputValue] = useState("")
+
+  const [inputValue, setInputValue] = useState('Madrid')
   let onInputChange=(e)=>{
     setInputValue(e.target.value)
+    console.log(inputValue)
   }
- 
+
+ const apiKey = '9852889fd033baae8e3254e0455b96d8'
 const fakeData = fakeWeatherData.list
- let humidity = fakeData[0].main.humidity
- console.log(`humidity: ${humidity}`)
- let pressure = fakeData[0].main.pressure
- console.log(`pressure: ${pressure}`)
-let temp = Math.floor(fakeData[0].main.temp - 273.15) + ' to ' + Math.ceil(fakeData[0].main.temp - 273.15)
-console.log(temp)
- let description = fakeData[0].weather[0].description
 
+const [weatherData, setWeatherData] = useState(null)
 
-// console.log(fakeData.list[0].main.pressure)
-// console.log(fakeData.list[0].main.temp)
-// console.log(fakeData.list[0].weather[0].description)//caption on weather
+const getData = async () => {
+  const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${inputValue}&appid=${apiKey}`)
+  if(!response.ok){
+    throw new Error('Error')
+  }else{
+    return response.json()
+  }
+}
+
+useEffect(()=>{
+  
+  getData().then(data => {
+    setWeatherData(data)
+  }).catch(e => console.log(e.message))
+  
+}, [])
+console.log(weatherData)
+const convertToCelsius = (kelvin) =>{
+  return Math.floor(kelvin - 273.15) + ' to ' + Math.ceil(kelvin - 273.15)
+} 
+
   return(
     <div className="App">
-      <main>
+
+        <main>
         <Search onInputChange={onInputChange} />
-        <TodayWeather 
-        temp = {temp}
-        pressure={pressure}
-        humidity={humidity}
-        description={description}
-        />
+      { weatherData ? 
+          (
+          <TodayWeather 
+          temp = {convertToCelsius(weatherData.main.temp)}
+          pressure={weatherData.main.pressure}
+          humidity={weatherData.main.humidity}
+          description={weatherData.weather[0].description}
+          /> 
+          
+          )
+          
+          : " "
+        
+      }
         <section className={style.nextHoursContainer}>
         <WeatherItem deg='24' time='6:00' src={clear}/>
         <WeatherItem deg='24' time='6:00' src={clear}/>
