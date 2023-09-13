@@ -8,7 +8,7 @@ import rain from "../img/weather-icons/rain.svg"
 import snow from "../img/weather-icons/snow.svg"
 import storm from "../img/weather-icons/storm.svg"
 import unknown from "../img/weather-icons/unknown.svg"
-import styles from "./ImgAndCaption.module.css"
+import styles from "../styles/ImgAndCaption.module.css"
 
 const ImgAndCaption=({desc})=>{
     let name;

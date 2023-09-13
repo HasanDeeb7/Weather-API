@@ -1,4 +1,4 @@
-import styles from './Input.module.css'
+import styles from '../styles/Input.module.css'
 
 const Input=({className,placeholder,onInputChange})=>{
     return(

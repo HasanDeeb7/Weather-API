@@ -1,6 +1,6 @@
 import Input from "./Input.component";
 import Button from "./Button.component";
-import styles from"./Search.module.css";
+import styles from"../styles/Search.module.css";
 
 const Search=({onInputChange,eventHandler})=>{
   return(

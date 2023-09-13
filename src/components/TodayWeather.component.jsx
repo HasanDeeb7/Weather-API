@@ -1,26 +1,28 @@
-import styles from "./TodayWeather.module.css"
+import styles from "../styles/TodayWeather.module.css"
 import ImgAndCaption from "./ImgAndCaption.component";
-import Temp from "./Temp.component";
-import HumidityAndPressure from "./HumidityAndPressure.component";
-const TodayWeather=({data})=>{
-    if(data){
-        let humidity=data.list[0].main.humidity
-        let temp=data.list[0].main.temp
-        let pressure=data.list[0].main.pressure
-        let desc=data.list[0].weather[0].description 
-    
+const TodayWeather=({humidity, temp, pressure, description})=>{
+
         return(
-            <main>
+            <main id="today-weather-container">
             <section className={styles.today}>
-                <ImgAndCaption desc={desc}/>
+                <ImgAndCaption desc={description}/>
                 <section id="today-weather-details">
-                    <Temp temp={temp}/>
-                    <HumidityAndPressure humidity={humidity} pressure={pressure}/>
+                <section className={styles.temp}>
+            <span id='temp-span'>Temperature</span> {(temp)} &deg;C
+                </section>
+                <section className={styles.other}>
+    <section className="Humidity">
+        <span id='humidity-span'>Humidity</span> {humidity}%
+    </section>
+    <section className="pressure">
+            <span id='pressure-span'>Pressure</span> {pressure}
+    </section>
+</section>
                 </section>
             </section>
         </main>
         )
-    }
+    
 }
 
 export default TodayWeather

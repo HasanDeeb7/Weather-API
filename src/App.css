@@ -1,13 +1,15 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway&display=swap);
+body{
+    background-color: #9ccef4;
+}
+
+/*
 *{
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     margin: 0;
     padding: 0;
     font-family: 'Raleway', sans-serif;
-}
-body{
-    background-color: #9ccef4;
 }
 header{
     background-color: #759eda;
@@ -38,9 +40,9 @@ header input::placeholder{
     cursor: pointer;
     background-color: #fffffff5;
     color: #1848bf;
-}
+} */
 /* start main */
-main {
+/* main {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -101,7 +103,7 @@ main span{
 }
 
 .condition-container figure{
-    /* width: 100%; */
+
     object-fit: contain;
 }
 
@@ -132,10 +134,8 @@ main span{
         flex-direction: column;
         gap: .4rem;
     }
-    /* .caption-on-weather{
-        width: 12rem;
-    } */
+
     #basis-container{
         width: 95%;
     }
-}
+} */
