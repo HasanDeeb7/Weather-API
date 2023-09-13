@@ -51,20 +51,20 @@ main {
     padding: .5rem;
     width: 100%;
 }
- .today-weather{
+ .today{
     width: 40%;
 }
-.today-weather{
+.today{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-.today-weather img{
+.today img{
     width: 300px;
     height: 300px;
 }
-.caption-on-weather{
+.caption{
     color: white;
     font-size: 25px;
     font-weight: bold;
@@ -132,9 +132,9 @@ main span{
         flex-direction: column;
         gap: .4rem;
     }
-    .caption-on-weather{
+    /* .caption-on-weather{
         width: 12rem;
-    }
+    } */
     #basis-container{
         width: 95%;
     }

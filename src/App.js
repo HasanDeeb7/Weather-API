@@ -1,33 +1,23 @@
-import React, { Component } from "react";
 import Search from "./components/Search";
-import  clear from './img/weather-icons/clear.svg';
-import  mostlyCloudy from './img/weather-icons/mostlycloudy.svg';
-
-import SayHi, { SayHello } from "./components/WeatherItem";
 import fakeWeatherData from "./fakeWeatherData.json";
 
 import "./App.css";
 
 const App = () => {
-  
-    const handleInputChange = value => {
-      this.setState({ name: value });
-    };
-  
 
     return (
-      <div classNameName="app">
+      <div className="App">
         <header>
-        <input type="text" className="search" placeholder="Type in a city name"/>
-        <button className="btn find-weather-btn">Find Weather</button>
-    </header>
+            <input type="text" className="search" placeholder="Type in a city name"/>
+            <button className="btn find-weather-btn">Find Weather</button>
+        </header>
     
     <main>
-        <section className="today-weather">
+        <section className="today">
             <img src={mostlyCloudy} alt="Weather"/>
-            <section className="caption-on-weather">overcast clouds</section>
+            <section className="caption">overcast clouds</section>
             <section id="today-weather-details">
-            <section className="temp">
+                <section className="temp">
                     <span>Temperature</span>10 to 11 c
                 </section>
                 <section className="other">
