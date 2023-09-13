@@ -1,77 +1,34 @@
-import Search from "./components/Search";
+import Search from "./components/Search"
+import TodayWeather from"./components/TodayWeather.component"
 import fakeWeatherData from "./fakeWeatherData.json";
 
 import "./App.css";
+import { useState,useEffect } from "react";
 
-const App = () => {
+const App=()=>{
 
-    return (
-      <div className="App">
-        <header>
-            <input type="text" className="search" placeholder="Type in a city name"/>
-            <button className="btn find-weather-btn">Find Weather</button>
-        </header>
-    
-    <main>
-        <section className="today">
-            <img src={mostlyCloudy} alt="Weather"/>
-            <section className="caption">overcast clouds</section>
-            <section id="today-weather-details">
-                <section className="temp">
-                    <span>Temperature</span>10 to 11 c
-                </section>
-                <section className="other">
-                    <section className="Humidity">
-                        <span>Humidity</span> 78%   
-                </section>
-                <section className="pressure">
-                    <span>Pressure</span> 1008.48
-                </section>
-            </section>
-        </section>
-    </section>
-        
-        <section id="basis-container">
-            <section className="condition-container">
-                <i className="time">3:00</i>
-                <figure><img className="weather-condition" src={mostlyCloudy} alt="clear-weather" /></figure>
-                <i className="temprature">8&deg;C</i>
-            </section>
-            <section className="condition-container">
-                <i className="time">6:00</i>
-                <figure><img className="weather-condition" src={mostlyCloudy} alt="clear-weather" /></figure>
-                <i className="temprature">9&deg;C</i>
-            </section>
-            <section className="condition-container">
-                <i className="time">9:00</i>
-                <figure><img className="weather-condition" src={clear} alt="clear-weather" /></figure>
-                <i className="temprature">14&deg;C</i>
-            </section>
-            <section className="condition-container">
-                <i className="time">12:00</i>
-                <figure><img className="weather-condition" src={clear} alt="clear-weather" /></figure>
-                <i className="temprature">17&deg;C</i>
-            </section>
-            <section className="condition-container">
-                <i className="time">15:00</i>
-            <figure><img className="weather-condition" src={clear} alt="clear-weather" /></figure>
-            <i className="temprature">18&deg;C</i>
-        </section>
-        <section className="condition-container">
-            <i className="time">18:00</i>
-            <figure><img className="weather-condition" src={clear} alt="clear-weather" /></figure>
-            <i className="temprature">16&deg;C</i>
-        </section>
-        <section className="condition-container">
-            <i className="time">21:00</i>
-            <figure><img className="weather-condition" src={mostlyCloudy} alt="clear-weather" /></figure>
-            <i className="temprature">13&deg;C</i>
-        </section>
-    </section>
-    </main>
-      </div>
-    );
+  let [inputValue,setInputValue]=useState("")
+  let onInputChange=(e)=>{
+    setInputValue(e.target.value)
   }
+ 
+// useEffect(()=>{
+//     fetch(fakeWeatherData)
+//     .then((response)=>response.json())
+//     .then((country)=>console.log(country))
+// })
+console.log(fakeWeatherData.list[0].main.humidity)
+console.log(fakeWeatherData.list[0].main.pressure)
+console.log(fakeWeatherData.list[0].main.temp)
+console.log(fakeWeatherData.list[0].weather[0].description)//caption on weather
+  return(
+    <div className="App">
+        <Search onInputChange={onInputChange} />
+        <TodayWeather humidity={fakeWeatherData.list[0].main.humidity} temp={fakeWeatherData.list[0].main.temp}
+        pressure={fakeWeatherData.list[0].main.pressure} desc={fakeWeatherData.list[0].weather[0].description}/>
+    </div>
 
+  )
+}
 
 export default App;

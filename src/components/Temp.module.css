@@ -1,0 +1,21 @@
+.temp{
+    font-size: 25px;
+    margin: 2rem;
+}
+span{
+    font-weight: bold;
+    margin-right: 15px;
+}
+@media (max-width:500px) {   
+    .temp{
+        display: flex;
+        flex-direction: column;
+        gap: .4rem;
+        margin-bottom:1rem ;
+    }
+    span{
+        margin: 0;
+    }
+}
+
+   

@@ -1,0 +1,18 @@
+input{
+    border: none;
+    padding: .5rem;
+    background-color:#759eda;
+    color: white;
+    font-size: 15px;
+    outline: none;
+    margin-right: .7rem;
+    border-bottom: 2px solid #5473c0f5;
+}
+input::placeholder{
+    color: white;
+}
+@media (max-width:500px) {
+    input{
+        width: 10rem;
+    }   
+}
