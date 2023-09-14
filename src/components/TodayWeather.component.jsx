@@ -1,6 +1,6 @@
 import styles from "../styles/TodayWeather.module.css"
 import ImgAndCaption from "./ImgAndCaption.component";
-const TodayWeather=({humidity, temp, pressure, description})=>{
+const TodayWeather=({humidity, temp_min,temp_max, pressure, description})=>{
 
         return(
             <main id="today-weather-container">
@@ -8,7 +8,7 @@ const TodayWeather=({humidity, temp, pressure, description})=>{
                 <ImgAndCaption desc={description}/>
                 <section id="today-weather-details">
                 <section className={styles.temp}>
-            <span id='temp-span'>Temperature</span> {(temp)} &deg;C
+            <span id='temp-span'>Temperature</span> {temp_min} To {temp_max} &deg;C
                 </section>
                 <section className={styles.other}>
             <section className="Humidity">
