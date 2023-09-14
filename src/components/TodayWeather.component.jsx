@@ -11,13 +11,13 @@ const TodayWeather=({humidity, temp, pressure, description})=>{
             <span id='temp-span'>Temperature</span> {(temp)} &deg;C
                 </section>
                 <section className={styles.other}>
-    <section className="Humidity">
-        <span id='humidity-span'>Humidity</span> {humidity}%
-    </section>
-    <section className="pressure">
-            <span id='pressure-span'>Pressure</span> {pressure}
-    </section>
-</section>
+            <section className="Humidity">
+                <span id='humidity-span'>Humidity</span> {humidity}%
+            </section>
+            <section className="pressure">
+                    <span id='pressure-span'>Pressure</span> {pressure}
+            </section>
+            </section>
                 </section>
             </section>
         </main>
