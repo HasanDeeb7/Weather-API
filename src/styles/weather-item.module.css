@@ -1,11 +1,11 @@
-.nextHoursContainer{
+.nextForecast{
     width: 80%;
     display: flex;
     margin-top: 4rem ;
     justify-content: space-around;
 }
 @media (max-width:500px) {
-    .nextHoursContainer{
+    .nextForecast{
        flex-direction: column;
        align-items: center;
        gap: 35px;
