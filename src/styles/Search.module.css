@@ -8,7 +8,9 @@
 }
 
 header{
+    display: flex;
     background-color: #759eda;;
     padding: 1.5rem;
+    width: 100%;
 }
 

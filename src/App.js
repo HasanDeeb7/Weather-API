@@ -11,7 +11,7 @@ import style from "./styles/weather-item.module.css"
 
 const App=()=>{
 
-  const [inputValue, setInputValue] = useState('Madrid')
+  const [inputValue, setInputValue] = useState('London')
   let onInputChange=(e)=>{
     setInputValue(e.target.value)
     console.log(inputValue)
@@ -35,6 +35,7 @@ useEffect(()=>{
   
   getData().then(data => {
     setWeatherData(data)
+    console.log(weatherData)
   }).catch(e => console.log(e.message))
   
 }, [])
