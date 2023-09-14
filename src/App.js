@@ -4,6 +4,16 @@ import WeatherItem from "./components/WeatherItem";
 import "./App.css";
 import { useState } from "react";
 import style from "./styles/weather-item.module.css";
+import clear from "./img/weather-icons/clear.svg";
+import cloudy from "./img/weather-icons/cloudy.svg";
+import drizzle from "./img/weather-icons/drizzle.svg";
+import fog from "./img/weather-icons/fog.svg";
+import mostlycloudy from "./img/weather-icons/mostlycloudy.svg";
+import partlycloudy from "./img/weather-icons/partlycloudy.svg";
+import rain from "./img/weather-icons/rain.svg";
+import snow from "./img/weather-icons/snow.svg";
+import storm from "./img/weather-icons/storm.svg";
+import unknown from "./img/weather-icons/unknown.svg";
 
 
 const App = () => {
@@ -37,6 +47,39 @@ const App = () => {
         });
     }
   };
+ const checkWeatherId = (weather_id)=>{
+   let condtitionImg = unknown;
+  
+  switch(true){
+    case (weather_id < 300 ):
+        condtitionImg = storm
+        break;
+    case (weather_id >= 300 && weather_id < 500):
+        condtitionImg=drizzle
+        break;
+    case (weather_id >= 500 && weather_id < 600):
+        condtitionImg=rain
+        break;
+    case (weather_id >= 600 && weather_id < 700):
+        condtitionImg=snow
+        break;
+    case (weather_id >= 700 && weather_id < 800):
+        condtitionImg=fog
+        break;
+    case (weather_id === 800):
+        condtitionImg=clear
+        break;
+    case (weather_id === 801 ):
+        condtitionImg = partlycloudy
+        break;
+    case (weather_id >= 802 && weather_id <= 805):
+        condtitionImg=mostlycloudy
+        break;
+    default:
+        break;        
+}
+return condtitionImg
+ }
 
   return (
     <div className="App">
@@ -55,9 +98,9 @@ const App = () => {
             <section className={style.nextForecast}>
             {weatherData.list.map((element,idx) =>{
               if(idx === 0) return
-              console.log(element)
+              // console.log(weatherData)
               
-              return (<WeatherItem description={element.weather[0].description} key={element.cod} temp={Math.floor(element.main.temp)} time={(element.dt_txt).split(' ')[1].slice(0,-3)}/>)
+              return (<WeatherItem src={checkWeatherId(element.weather[0].id)} key={element.cod} temp={Math.floor(element.main.temp)} time={(element.dt_txt).split(' ')[1].slice(0,-3)}/>)
             })}
             </section>
             </>
