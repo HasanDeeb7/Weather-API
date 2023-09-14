@@ -11,7 +11,7 @@ import style from "./styles/weather-item.module.css"
 
 const App=()=>{
 
-  const [inputValue, setInputValue] = useState('London')
+  const [inputValue, setInputValue] = useState('Madrid')
   let onInputChange=(e)=>{
     setInputValue(e.target.value)
     console.log(inputValue)
@@ -23,7 +23,7 @@ const fakeData = fakeWeatherData.list
 const [weatherData, setWeatherData] = useState(null)
 
 const getData = async () => {
-  const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${inputValue}&appid=${apiKey}`)
+  const response = await fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${inputValue}&cnt=8&units=metric&appid=${apiKey}`)
   if(!response.ok){
     throw new Error('Error')
   }else{
@@ -35,46 +35,44 @@ useEffect(()=>{
   
   getData().then(data => {
     setWeatherData(data)
-    console.log(weatherData)
   }).catch(e => console.log(e.message))
   
 }, [])
 console.log(weatherData)
-const convertToCelsius = (kelvin) =>{
-  return Math.floor(kelvin - 273.15) + ' to ' + Math.ceil(kelvin - 273.15)
+const convertToCelsius = (min,max) =>{
+  return Math.floor(min) + ' to ' + Math.ceil(max)
 } 
-
+  // if(weatherData){
+  //   console.log(weatherData.list[2].main.temp)
+  // }
   return(
     <div className="App">
 
-        <main>
         <Search onInputChange={onInputChange} />
-      { weatherData ? 
+      {weatherData ? 
           (
+            <>
+            <main>
           <TodayWeather 
-          temp = {convertToCelsius(weatherData.main.temp)}
-          pressure={weatherData.main.pressure}
-          humidity={weatherData.main.humidity}
-          description={weatherData.weather[0].description}
-          /> 
-          
-          )
+          temp = {convertToCelsius(weatherData.list[0].main.temp_min, weatherData.list[0].main.temp_min)}
+          pressure={weatherData.list[0].main.pressure}
+          humidity={weatherData.list[0].main.humidity}
+          description={weatherData.list[0].weather[0].description}
+          />
 
-          : " "
-        
-      }
-        <section className={style.nextHoursContainer}>
-        <WeatherItem deg='24' time='6:00' src={clear}/>
-        <WeatherItem deg='24' time='6:00' src={clear}/>
-        <WeatherItem deg='24' time='6:00' src={clear}/>
-        <WeatherItem deg='24' time='6:00' src={clear}/>
-        <WeatherItem deg='24' time='6:00' src={clear}/>
-        <WeatherItem deg='24' time='6:00' src={clear}/>
-        <WeatherItem deg='24' time='6:00' src={clear}/>
-
-        
-        </section>
+          <section className={style.nextHoursContainer}>
+          {weatherData.list.map((element, idx) =>{
+            if (idx === 0) return
+            console.log(element.main)
+            return <WeatherItem temp={element.main.temp} time={(element.dt_txt).split(' ')[1].slice(0,-3)} />
+            
+          })} 
+          </section>
       </main>
+          </>
+          )
+          : " " 
+      }
     </div>
 
   )
