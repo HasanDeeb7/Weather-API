@@ -69,6 +69,9 @@ const convertToCelsius = (kelvin) =>{
         <WeatherItem deg='24' time='6:00' src={clear}/>
         <WeatherItem deg='24' time='6:00' src={clear}/>
         <WeatherItem deg='24' time='6:00' src={clear}/>
+        <WeatherItem deg='24' time='6:00' src={clear}/>
+        <WeatherItem deg='24' time='6:00' src={clear}/>
+
         
         </section>
       </main>
