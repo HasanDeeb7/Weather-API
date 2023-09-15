@@ -15,33 +15,49 @@ import snow from "./img/weather-icons/snow.svg";
 import storm from "./img/weather-icons/storm.svg";
 import unknown from "./img/weather-icons/unknown.svg";
 import errorCloud from "./img/weather-icons/Vector.svg";
+const errMessages = 'Something happened!'
 
 const App = () => {
   const [inputValue, setInputValue] = useState("madrid");
   const [weatherData, setWeatherData] = useState(null);
   const [mainClass, setMainClass] = useState("");
+  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   let onInputChange = (e) => {
     setInputValue(e.target.value);
   };
   let apiKey = "04eec21504ca03d13f534a27f6feb54c";
-  
+
   let fetching = () => {
+    setIsLoading(true);
     if (inputValue !== "") {
       fetch(
         `http://api.openweathermap.org/data/2.5/forecast?q=${inputValue}&cnt=8&units=metric&appid=${apiKey}`
-        )
+      )
         .then((response) => {
           if (!response.ok) {
-            throw new Error("response was not ok");
+            setIsLoading(false);
           }
           return response.json();
         })
         .then((country) => {
-          setWeatherData(country);
+          console.log(country);
+          if (country.cod === "200") {
+            setWeatherData(country);
+            setIsLoading(false);
+            setIsError(false);
+          } else if (country.cod === "404") {
+            setWeatherData(null);
+            setIsLoading(false);
+            setIsError(true);
+            setErrorMessage(country.message)
+          }
         })
         .catch((error) => {
-          setWeatherData(null);
+          setIsError(true);
+          setErrorMessage(error.message);
         });
     }
   };
@@ -93,15 +109,14 @@ const App = () => {
       checkMainClass(weatherData.list[0].weather[0].id);
     }
   }, [weatherData]);
-
   return (
     <div className="App">
       <header>
         <Search onInputChange={onInputChange} eventHandler={fetching} />
       </header>
       <main className={mainClass}>
-        {weatherData && (
-          <>
+        {weatherData && !isLoading ? (
+            <>
             <TodayWeather
               src={checkWeatherId(weatherData.list[0].weather[0].id)}
               temp_min={Math.floor(weatherData.list[0].main.temp_min)}
@@ -109,25 +124,35 @@ const App = () => {
               pressure={weatherData.list[0].main.pressure}
               humidity={weatherData.list[0].main.humidity}
               description={weatherData.list[0].weather[0].description}
-            />
+              />
 
             <section className={style.nextForecast}>
               {weatherData.list.map((element, idx) => {
                 if (idx === 0) return;
-                // console.log(weatherData)
-
                 return (
                   <WeatherItem
-                    src={checkWeatherId(element.weather[0].id)}
-                    key={element.cod}
-                    temp={Math.floor(element.main.temp)}
-                    time={element.dt_txt.split(" ")[1].slice(0, -3)}
+                  
+                  src={checkWeatherId(element.weather[0].id)}
+                  key={idx}
+                  temp={Math.floor(element.main.temp)}
+                  time={element.dt_txt.split(" ")[1].slice(0, -3)}
                   />
-                );
-              })}
+                  );
+                })}
             </section>
           </>
-        )}
+                
+        ) : 
+          isError ? 
+          (<TodayWeather src={errorCloud} description={(errorMessage)} />
+            ): 
+            (<TodayWeather src={cloudy} description="Loading..." />)
+            
+            
+            
+          
+
+        }
       </main>
     </div>
   );
