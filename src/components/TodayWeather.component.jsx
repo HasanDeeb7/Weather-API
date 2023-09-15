@@ -8,16 +8,13 @@ const TodayWeather = ({
   temp_max,
   pressure,
   description,
-  isLoading
 }) => {
-
   return (
-    
     <section id="today-weather-container">
       <section className={styles.today}>
-        {isLoading &&
-            <ImgAndCaption isLoading={isLoading} desc={description} src={src} />
-        }
+
+            <ImgAndCaption  description={description} src={src} />
+        
           {pressure &&
           <>
         <section id="today-weather-details">

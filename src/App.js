@@ -15,7 +15,8 @@ import snow from "./img/weather-icons/snow.svg";
 import storm from "./img/weather-icons/storm.svg";
 import unknown from "./img/weather-icons/unknown.svg";
 import errorCloud from "./img/weather-icons/Vector.svg";
-const errMessages = 'Something happened!'
+import ImgAndCaption from "./components/ImgAndCaption.component";
+import imageStyle from "./styles/ImgAndCaption.module.css"
 
 const App = () => {
   const [inputValue, setInputValue] = useState("madrid");
@@ -48,11 +49,10 @@ const App = () => {
             setIsLoading(false);
             setIsError(false);
           } else if (country.cod === "404") {
-     
             setWeatherData(null);
             setIsLoading(false);
             setIsError(true);
-            setErrorMessage(country.message)
+            setErrorMessage(country.message);
           }
         })
         .catch((error) => {
@@ -62,7 +62,7 @@ const App = () => {
     }
   };
   useEffect(() => {
-    document.querySelector(".search").value = "madrid";
+    document.querySelector(".search").value = inputValue;
     fetching();
   }, []);
   let checkMainClass = (weather_id) => {
@@ -114,9 +114,11 @@ const App = () => {
       <header>
         <Search onInputChange={onInputChange} eventHandler={fetching} />
       </header>
-      <main className={mainClass}>
-        {weatherData && !isLoading ? (
-            <>
+
+        <main className={mainClass}>
+      {!isError ? 
+        weatherData && !isLoading ? (
+          <>
             <TodayWeather
               src={checkWeatherId(weatherData.list[0].weather[0].id)}
               temp_min={Math.floor(weatherData.list[0].main.temp_min)}
@@ -131,28 +133,23 @@ const App = () => {
                 if (idx === 0) return;
                 return (
                   <WeatherItem
-                  
                   src={checkWeatherId(element.weather[0].id)}
                   key={idx}
                   temp={Math.floor(element.main.temp)}
-                  time={element.dt_txt.split(" ")[1].slice(0, -3)}
-                  />
-                  );
-                })}
+                    time={element.dt_txt.split(" ")[1].slice(0, -3)}
+                    />
+                );
+              })}
             </section>
           </>
-                
-        ) : 
-          isError ? 
-          (<TodayWeather isLoading={isLoading} src={errorCloud} description={(errorMessage)} />
-            ): 
-            (<TodayWeather src={cloudy} description="Loading..." />)
-            
-            
-            
-          
-
-        }
+        ) : (
+          // isError ?
+          // (<TodayWeather isLoading={isLoading} src={errorCloud} description={(errorMessage)} />
+          //   ):
+          <TodayWeather src={cloudy} description="Loading..." />
+        )
+        : <section id="today-weather-container"><ImgAndCaption src={errorCloud} description={errorMessage}/></section>
+      }
       </main>
     </div>
   );
