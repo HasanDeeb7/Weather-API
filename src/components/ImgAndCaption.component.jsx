@@ -8,6 +8,7 @@ import rain from "../img/weather-icons/rain.svg";
 import snow from "../img/weather-icons/snow.svg";
 import storm from "../img/weather-icons/storm.svg";
 import unknown from "../img/weather-icons/unknown.svg";
+import errorSvg from "../img/weather-icons/Vector.svg";
 import styles from "../styles/ImgAndCaption.module.css";
 
 const ImgAndCaption = ({ desc }) => {
@@ -29,7 +30,7 @@ const ImgAndCaption = ({ desc }) => {
   )
     name = storm;
   else {
-    name = unknown;
+    name = errorSvg;
   }
   return (
     <div>

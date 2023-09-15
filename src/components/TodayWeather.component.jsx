@@ -1,7 +1,6 @@
 import styles from "../styles/TodayWeather.module.css"
 import ImgAndCaption from "./ImgAndCaption.component";
 const TodayWeather=({humidity, temp_min,temp_max, pressure, description})=>{
-
         return(
             <main id="today-weather-container">
             <section className={styles.today}>

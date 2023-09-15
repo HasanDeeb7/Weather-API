@@ -14,6 +14,7 @@ import rain from "./img/weather-icons/rain.svg";
 import snow from "./img/weather-icons/snow.svg";
 import storm from "./img/weather-icons/storm.svg";
 import unknown from "./img/weather-icons/unknown.svg";
+import errorCloud from "./img/weather-icons/Vector.svg";
 
 
 const App = () => {
@@ -24,14 +25,13 @@ const App = () => {
     setInputValue(e.target.value);
   };
   
-
   let apiKey = "04eec21504ca03d13f534a27f6feb54c";
-
+  
   let fetching = () => {
     if (inputValue !== "") {
       fetch(
         `http://api.openweathermap.org/data/2.5/forecast?q=${inputValue}&cnt=8&units=metric&appid=${apiKey}`
-      )
+        )
         .then((response) => {
           if (!response.ok) {
             throw new Error("response was not ok");
@@ -45,10 +45,12 @@ const App = () => {
         .catch((error) => {
           setWeatherData(null);
         });
-    }
-  };
+        
+      }
+    };
+
  const checkWeatherId = (weather_id)=>{
-   let condtitionImg = unknown;
+   let condtitionImg = errorCloud;
   
   switch(true){
     case (weather_id < 300 ):
@@ -83,7 +85,7 @@ return condtitionImg
 
   return (
     <div className="App">
-      <main>
+      <main style={{} }>
         <Search onInputChange={onInputChange} eventHandler={fetching} />
         {weatherData &&  (
           <>
@@ -93,6 +95,7 @@ return condtitionImg
             pressure={weatherData.list[0].main.pressure}
             humidity={weatherData.list[0].main.humidity}
             description={weatherData.list[0].weather[0].description}
+            id={weatherData.list[0].weather[0].id}
             />
 
             <section className={style.nextForecast}>
