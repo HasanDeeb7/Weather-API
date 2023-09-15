@@ -43,12 +43,12 @@ const App = () => {
           return response.json();
         })
         .then((country) => {
-          console.log(country);
           if (country.cod === "200") {
             setWeatherData(country);
             setIsLoading(false);
             setIsError(false);
           } else if (country.cod === "404") {
+     
             setWeatherData(null);
             setIsLoading(false);
             setIsError(true);
@@ -144,7 +144,7 @@ const App = () => {
                 
         ) : 
           isError ? 
-          (<TodayWeather src={errorCloud} description={(errorMessage)} />
+          (<TodayWeather isLoading={isLoading} src={errorCloud} description={(errorMessage)} />
             ): 
             (<TodayWeather src={cloudy} description="Loading..." />)
             
