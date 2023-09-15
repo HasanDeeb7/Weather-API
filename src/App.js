@@ -18,19 +18,28 @@ import errorCloud from "./img/weather-icons/Vector.svg";
 const errMessages = 'Something happened!'
 
 const App = () => {
+  // this state is for getting the input value when the input changes, with an initial value madrid
   const [inputValue, setInputValue] = useState("madrid");
+  // this state is for getting whole data using the api with initial value null because it's an object
   const [weatherData, setWeatherData] = useState(null);
+  // this state is used to change the background color depending on different weather 
   const [mainClass, setMainClass] = useState("");
+  // this state is used to display error messages based on different cases
   const [isError, setIsError] = useState(false);
+  // this state shows what kind of error occured
   const [errorMessage, setErrorMessage] = useState("");
+  // this state is for loading
   const [isLoading, setIsLoading] = useState(true);
 
+  // this function sets the name of country in setInputValue
   let onInputChange = (e) => {
     setInputValue(e.target.value);
   };
-  let apiKey = "04eec21504ca03d13f534a27f6feb54c";
 
-  let fetching = () => {
+  let apiKey = "04eec21504ca03d13f534a27f6feb54c";
+  // this function is for fetching the real api, catch an error if occured while fetchingand set the isError to true if status is 404(not found),
+  // set is loading to false when there is a response(there is data or not it return a response)
+  let fetchingData = () => {
     setIsLoading(true);
     if (inputValue !== "") {
       fetch(
@@ -61,15 +70,22 @@ const App = () => {
         });
     }
   };
+
+// becuause we have an initial inputValue which is 'madrid', we need to fetch madrid country for the first time the component mounts,
+// so we use useEffect method to do this and we put an empty array as the dependency array so it's only called one time only
   useEffect(() => {
     document.querySelector(".search").value = "madrid";
     fetching();
   }, []);
+
+  // this function is used to check the id of a specific country and change the background color according to this id
   let checkMainClass = (weather_id) => {
     if (weather_id >= 500 && weather_id < 600) setMainClass("rain");
     else if (weather_id === 800) setMainClass("clear");
     else setMainClass("");
   };
+
+  // this function is used to check the id of a specific country and put the correspending image in conditionImg
   const checkWeatherId = (weather_id) => {
     let condtitionImg = unknown;
 
@@ -104,19 +120,25 @@ const App = () => {
     return condtitionImg;
   };
 
+  // this useEffect is to apply the background color each time we change the country(fetching data)
   useEffect(() => {
     if (weatherData) {
       checkMainClass(weatherData.list[0].weather[0].id);
     }
   }, [weatherData]);
+
   return (
     <div className="App">
       <header>
-        <Search onInputChange={onInputChange} eventHandler={fetching} />
+        {/* this search component contains two inner components(input and button) so we pass the onInputChange method 
+        and fetchingData to it so we can apply the two functions on their corresponding component, onInputChange to the input and fetchingData to the button  */}
+        <Search onInputChange={onInputChange} eventHandler={fetchingData} />
       </header>
       <main className={mainClass}>
         {weatherData && !isLoading ? (
             <>
+            {/* this component has the ImageAndCaption component and two other section contains the temperature ,humidity and pressure so we send the src of the image,
+            the min and max temp the pressure,humidity and caption(description) to use them  */}
             <TodayWeather
               src={checkWeatherId(weatherData.list[0].weather[0].id)}
               temp_min={Math.floor(weatherData.list[0].main.temp_min)}
@@ -125,7 +147,9 @@ const App = () => {
               humidity={weatherData.list[0].main.humidity}
               description={weatherData.list[0].weather[0].description}
               />
-
+              {/* this section contains all the next 24hours, we use map to access the list from 1 to 7(we have list of 8 element we need the first for today's weather and the rest for 24h)
+              and it's contains time,figure and temperature.
+              note that this section will be executed in case no error happenned */}
             <section className={style.nextForecast}>
               {weatherData.list.map((element, idx) => {
                 if (idx === 0) return;
@@ -143,15 +167,12 @@ const App = () => {
           </>
                 
         ) : 
+        // this section will be executed in case of error to make a specific message for the error (in case of error) and  in case of loading we put loading... message
           isError ? 
           (<TodayWeather src={errorCloud} description={(errorMessage)} />
             ): 
             (<TodayWeather src={cloudy} description="Loading..." />)
             
-            
-            
-          
-
         }
       </main>
     </div>
