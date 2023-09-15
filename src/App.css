@@ -1,8 +1,28 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway&display=swap);
-body{
+
+@media (min-width: 500px) {
+  main {
+    height: calc(100vh - 86px);
     background-color: #9ccef4;
+  }
+}
+main {
+  transition: background-color 0.7s ease-out;
+  background-color: #9ccef4;
+}
+main.rain {
+  background-color: #9cb4e3f7;
+}
+main.clear {
+  background-color: #6ab5e9f7;
 }
 
+header {
+  display: flex;
+  background-color: #759eda;
+  padding: 1.5rem;
+  width: 100%;
+}
 /*
 *{
     box-sizing: border-box;

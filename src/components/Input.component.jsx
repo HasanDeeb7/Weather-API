@@ -1,9 +1,14 @@
-import styles from '../styles/Input.module.css'
+import styles from "../styles/Input.module.css";
 
-const Input=({className,placeholder,onInputChange})=>{
-    return(
-        <input type="text" className={className} placeholder={placeholder} onInput={onInputChange}/>
-    )
-}
+const Input = ({ className, placeholder, onInputChange }) => {
+  return (
+    <input
+      type="text"
+      className={className}
+      placeholder={placeholder}
+      onBlur={onInputChange}
+    />
+  );
+};
 
-export default Input
+export default Input;
